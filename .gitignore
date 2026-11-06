@@ -1,0 +1,27 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+
+# Dependencies and builds
+node_modules/
+dist/
+build/
+target/
+out/
+coverage/
+
+# OS and editors
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs and local data
+*.log
+data/
+*.sqlite
+*.db

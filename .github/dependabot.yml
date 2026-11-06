@@ -1,0 +1,8 @@
+# Weekly update PRs. Add an entry for the app's package ecosystem when code lands.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
