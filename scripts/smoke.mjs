@@ -5,7 +5,7 @@ const ua = `SignalDesk/0.1 (open-source research tool; ${contact})`
 
 async function json(url, headers = {}) {
   const res = await fetch(url, { headers })
-  if (!res.ok) throw new Error(`${url} -> ${res.status}`)
+  if (!res.ok) throw new Error(`${url} -> ${res.status}: ${(await res.text()).replace(/\s+/g, ' ').slice(0, 160)}`)
   return res.json()
 }
 
@@ -18,6 +18,12 @@ const check = async (label, fn) => {
     console.log(`FAIL ${label}: ${e.message}`)
   }
 }
+
+// Also try the SEC's own sample User-Agent format, to tell a format problem from an IP block.
+await check('SEC Nike (plain User-Agent)', async () => {
+  const d = await json('https://data.sec.gov/submissions/CIK0000320187.json', { 'User-Agent': `Signal Desk ${contact}` })
+  return d.name
+})
 
 const sec = [['Nike', 320187], ['On', 1858985], ['Deckers (Hoka)', 910521], ['Wolverine (Saucony)', 110471]]
 for (const [name, cik] of sec) {
@@ -32,7 +38,9 @@ for (const [name, cik] of sec) {
 
 await check('GDELT news "Nike running"', async () => {
   const q = new URLSearchParams({ query: 'Nike running sourcelang:english', mode: 'artlist', format: 'json', maxrecords: '5', sort: 'datedesc', timespan: '1month' })
-  const res = await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?${q}`)
+  const res = await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?${q}`).catch((e) => {
+    throw new Error(`${e.message} (${e.cause?.code ?? e.cause?.message ?? 'no cause'})`)
+  })
   const text = await res.text()
   let d
   try { d = JSON.parse(text) } catch { throw new Error(`not JSON (${res.status}): ${text.slice(0, 120)}`) }
