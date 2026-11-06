@@ -2,7 +2,19 @@
 
 An open-source desktop tool for strategists and investors. Pick a category and a handful of companies; Signal Desk reads their public filings and recent news and surfaces the **signals, challenges and opportunities** across the category, each linked to its source, plus what changed since the last run.
 
-> **Status:** setup. No app code yet. See [docs/product-brief.md](docs/product-brief.md) for the plan.
+> **Status:** prototype. Demo category: running brands. See [docs/product-brief.md](docs/product-brief.md) for the plan.
+
+## Run it
+
+Needs Node 22 and Rust (https://rustup.rs).
+
+```bash
+npm ci
+npm run tauri dev     # opens the desktop app
+npm run smoke         # checks the live data sources from the command line
+```
+
+Each push to `main` also builds a Mac app: open the latest **Build** run under the Actions tab and download `signal-desk-mac` from Artifacts. It isn't notarized yet, so the first time you open it, right-click the app and choose Open (or allow it under System Settings, Privacy & Security).
 
 ## Principles
 

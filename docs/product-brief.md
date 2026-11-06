@@ -18,7 +18,7 @@ Pick a category and 5 to 8 public companies. Signal Desk:
 ## Non-goals for v1
 - X/Twitter data (no free API; scraping breaks its terms). Possible later as "bring your own X key".
 - Trading, alerts, or any action outside the app.
-- Private companies or non-US filings.
+- Deep analysis of non-US annual reports in the first build (linked, read later).
 - Investment advice.
 
 ## How it ships
@@ -28,8 +28,10 @@ Pick a category and 5 to 8 public companies. Signal Desk:
 ## AI
 Users bring their own key (OpenAI-compatible, e.g. Groq free tier) stored in the OS keychain, or run a local model. No shared key.
 
+## Demo category (decided Nov 6, 2026)
+Running brands, after the NYC Marathon and ahead of next year's majors: Nike, Adidas, On, Hoka (Deckers), Asics, Brooks (Berkshire Hathaway), New Balance, Saucony (Wolverine World Wide), Puma, Bandit. SEC filers get filings; Adidas, Asics and Puma publish annual reports on their investor sites; Brooks, New Balance and Bandit are private, so news and newsrooms only.
+
 ## Decide
 - **Order:** website demo first, or desktop download first?
-- **Demo category:** alternative asset managers, B2B payments, or another?
 - **Name:** keep "Signal Desk"?
 - **Employer check:** any Prosek policy on public tools covering client categories?

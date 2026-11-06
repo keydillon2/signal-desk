@@ -1,0 +1,22 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "What the main window may do. Network access is limited to the data sources below.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "store:default",
+    {
+      "identifier": "opener:allow-open-url",
+      "allow": [{ "url": "https://*" }]
+    },
+    {
+      "identifier": "http:default",
+      "allow": [
+        { "url": "https://data.sec.gov/*" },
+        { "url": "https://www.sec.gov/*" },
+        { "url": "https://api.gdeltproject.org/*" }
+      ]
+    }
+  ]
+}
