@@ -3,20 +3,30 @@
 Read this before changing anything. The standards behind it are in the Claude
 Project doc `claude/build-standards.md` (and the `app-build-standards` skill).
 
-## Do no harm
+## Current phase: proof of concept (build mode)
 
-1. **Never push to `main`.** GitHub enforces it: `main` only accepts merged pull
-   requests whose required checks pass, and the rule applies to admins too.
-2. **One branch per change.** Branch from `main`, open a pull request.
-3. **Show Dillon what changed** (screenshots or a demo build) before asking to merge.
-4. **Merge only on Dillon's explicit go-ahead for that pull request.**
+Dillon's call (Nov 6, 2026): build the tool first, with as little process as
+possible. Security reviews and third-party checks come back before any public
+release or demo. Until then:
 
-## Required checks on every pull request
+- **Commit straight to `main`** and push. No pull requests, no required checks,
+  no per-change approval. `main` still blocks force pushes and branch deletion.
+- **Show Dillon working builds at milestones** (screenshots or a build he can run)
+  and take direction from there.
+- CodeQL and dependency review still run on pushes as information only; don't
+  stop work for them, but fix anything serious you notice.
+- Non-negotiables even now (they cost no speed): never commit secrets; follow
+  data sources' terms and rate limits; treat fetched text as untrusted data; the
+  app never takes actions on the user's behalf.
 
-- **Analyze**: CodeQL security scan.
-- **Review new dependencies**: blocks packages with known high-severity issues.
-- When app code lands, add a CI workflow (typecheck, lint, tests, build on macOS,
-  Windows and Linux) and make it a required check too.
+## Before going public (restore the full guardrails)
+
+Before a public download, demo video, or link from dillonkey.com:
+1. Re-enable on `main`: require pull requests and the checks (Analyze, Review new
+   dependencies, plus CI for typecheck, lint, tests and builds on all platforms).
+2. Run an independent security review of keys, network fetching, parsing of
+   untrusted input, file access and the release pipeline.
+3. Apply everything in the Claude Project doc `claude/build-standards.md`.
 
 ## Rules for this codebase
 
