@@ -19,6 +19,8 @@ jobs:
     name: Live data sources
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Cloud runners are often blocked by these sources; informational only.
+    continue-on-error: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -34,6 +36,8 @@ jobs:
     name: Mac app
     runs-on: macos-latest
     timeout-minutes: 45
+    permissions:
+      contents: write # to publish the "dev-build" pre-release
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -54,3 +58,10 @@ jobs:
           name: signal-desk-mac
           path: signal-desk-mac.zip
           retention-days: 14
+      # Rolling pre-release so the newest build is always at the same URL.
+      - name: Publish to the dev-build release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view dev-build >/dev/null 2>&1 || gh release create dev-build --prerelease --title "Latest prototype build" --notes "Built automatically from main. Unsigned prototype; sample data."
+          gh release upload dev-build signal-desk-mac.zip --clobber
