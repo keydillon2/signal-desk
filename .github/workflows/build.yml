@@ -46,9 +46,11 @@ jobs:
         with:
           workspaces: src-tauri
       - run: npm ci
-      - run: npx tauri build --bundles dmg
+      - run: npx tauri build --bundles app
+      # Zip with ditto so the app keeps its permissions and signature.
+      - run: ditto -c -k --keepParent "src-tauri/target/release/bundle/macos/Signal Desk.app" signal-desk-mac.zip
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: signal-desk-mac
-          path: src-tauri/target/release/bundle/dmg/*.dmg
+          path: signal-desk-mac.zip
           retention-days: 14
