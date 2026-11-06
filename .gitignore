@@ -22,6 +22,6 @@ coverage/
 
 # Logs and local data
 *.log
-data/
+/data/
 *.sqlite
 *.db
